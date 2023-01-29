@@ -1,11 +1,12 @@
 #Server
-import os
 import time
 import socket
+from pathlib import Path
+#IP Address
+host = socket.gethostbyname(socket.gethostname())
+port = 2511
+
 def main():
-    #IP Address
-    host = socket.gethostbyname(socket.gethostname())
-    port = 2511
     startServer(host, port)
 
 def createFile():
@@ -23,38 +24,41 @@ def createFile():
 
     print("File created and data written successfully!")
 
+def checkFile():
+        path = "D:/$/Programming/XProject/Xocket/pythonXocket/large_file.txt"
+        obj = Path(path)
+        if not (obj.exists()):
+            print("Start Creating file")
+            createFile()
+        else:
+            print("File already existed")
 
-def uploadFile(socket):
-    socket.send("large_file.txt".encode())
-
+        
 def startServer(host,port):
 
     #Create socket
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     Sx.bind((host,port))
-    Sx.listen(3)
+    Sx.listen(5)
 
     print("------------------------------")
     while True:
         print("\tWaiting Connection")
         ####Connection details
         communication_socket, address = Sx.accept()
-        name_client = communication_socket.recv(500).decode("utf-8")
+        name_client = communication_socket.recv(1024).decode("utf-8")
         print("\tConnection Details")
         print(f"\tClient's name : {name_client}")
         print(f"\tConnected to {address}")
         #print(f"\tCommunication socket : {communication_socket}")
 
         ####File
-        path = "D:\$\Programming\XProject\Xocket\pythonXocket\large_file.txt"
-        if not (os.path.exists()):
-            print("Create file")
-            createFile()
+        checkFile()
 
         ####Upload
         print("Start sending files")
         start = time.time()
-        uploadFile(Sx)
+        communication_socket.send("large_file.txt".encode())
         communication_socket.close()
         end = time.time()
 
@@ -63,5 +67,5 @@ def startServer(host,port):
 
 
 if __name__ == "__main__":
-    main()
+       main()
 
