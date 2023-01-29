@@ -2,38 +2,23 @@
 import time
 import socket
 from pathlib import Path
+import writeFile as wf
+
 #IP Address
 host = socket.gethostbyname(socket.gethostname())
 port = 2511
 
 def main():
     startServer(host, port)
-
-def createFile():
-    file_name = "large_file.txt"
-    file_size = 500 * 1024 * 1024  # 500MB
-
-    # Create the file with the specified size
-    with open(file_name, "wb") as file:
-        for _ in range(file_size):
-            file.write(b'\0')
-
-    # Write some data to the file
-    with open(file_name, "ab") as file:
-        file.write(b"This is some data that will be written to the file.")
-
-    print("File created and data written successfully!")
-
+    
 def checkFile():
-        path = "D:/$/Programming/XProject/Xocket/pythonXocket/large_file.txt"
-        obj = Path(path)
-        if not (obj.exists()):
-            print("Start Creating file")
-            createFile()
-        else:
-            print("File already existed")
+    path = "./pythonXocket/"
+    obj = Path(path)
 
-        
+    if not (obj.exists()):
+        wf.writeFile()
+
+
 def startServer(host,port):
 
     #Create socket
@@ -51,15 +36,14 @@ def startServer(host,port):
         print(f"\tClient's name : {name_client}")
         print(f"\tConnected to {address}")
         #print(f"\tCommunication socket : {communication_socket}")
-        
-        ####File
-        checkFile()
 
-        ####Upload
-        print("Start sending files")
+        ####File
+        print("Start uploading file")
+        checkFile()
         start = time.time()
-        communication_socket.send("large_file.txt".encode())
-        communication_socket.close()
+        with open("large_file.txt", "rb") as file:
+            file_data = file.read()
+            communication_socket.sendall(file_data)
         end = time.time()
 
         ####Result
