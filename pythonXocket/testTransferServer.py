@@ -51,7 +51,7 @@ def startServer(host,port):
         print(f"\tClient's name : {name_client}")
         print(f"\tConnected to {address}")
         #print(f"\tCommunication socket : {communication_socket}")
-
+        
         ####File
         checkFile()
 
