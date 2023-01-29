@@ -21,8 +21,9 @@ def startClient(host,port):
 
     print("------------------------------")
     print("\tWaiting Connection")
-    file = Sx.recv(1024).decode("utf-8")
-    print(f"\tReceive {file}")
+    file = Sx.recv(1024)
+    with open("received_file.txt", "wb") as f:
+        f.write(file)
     print("\tCompletely transfer")
 
 if __name__ == "__main__":
