@@ -14,5 +14,5 @@ def writeFile():
 
     print("File created and data written successfully!")
 
-
+writeFile()
 

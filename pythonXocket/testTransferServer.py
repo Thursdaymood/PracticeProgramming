@@ -11,16 +11,7 @@ port = 2511
 def main():
     startServer(host, port)
     
-def checkFile():
-    path = "./pythonXocket/"
-    obj = Path(path)
-
-    if not (obj.exists()):
-        wf.writeFile()
-
-
 def startServer(host,port):
-
     #Create socket
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     Sx.bind((host,port))
@@ -38,8 +29,7 @@ def startServer(host,port):
         #print(f"\tCommunication socket : {communication_socket}")
 
         ####File
-        print("Start uploading file")
-        checkFile()
+        print("\tStart uploading file")
         start = time.time()
         with open("large_file.txt", "rb") as file:
             file_data = file.read()
