@@ -2,7 +2,6 @@
 import time
 import socket
 from pathlib import Path
-import writeFile as wf
 
 #IP Address
 host = socket.gethostbyname(socket.gethostname())
@@ -11,6 +10,7 @@ port = 2511
 def main():
     startServer(host, port)
     
+
 def startServer(host,port):
     #Create socket
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,7 +22,7 @@ def startServer(host,port):
         print("\tWaiting Connection")
         ####Connection details
         communication_socket, address = Sx.accept()
-        name_client = communication_socket.recv(1024).decode("utf-8")
+        name_client = communication_socket.recv(9000000).decode("utf-8")
         print("\tConnection Details")
         print(f"\tClient's name : {name_client}")
         print(f"\tConnected to {address}")
@@ -31,6 +31,7 @@ def startServer(host,port):
         ####File
         print("\tStart uploading file")
         start = time.time()
+
         with open("large_file.txt", "rb") as file:
             file_data = file.read()
             communication_socket.sendall(file_data)

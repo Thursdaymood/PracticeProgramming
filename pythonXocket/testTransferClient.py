@@ -21,7 +21,7 @@ def startClient(host,port):
 
     print("------------------------------")
     print("\tWaiting Connection")
-    file = Sx.recv(1024)
+    file = Sx.recv(9000000)
     with open("received_file.txt", "wb") as f:
         f.write(file)
     print("\tCompletely transfer")
