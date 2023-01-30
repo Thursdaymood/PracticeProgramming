@@ -1,4 +1,5 @@
 #Client
+#Test by sending a big file
 import time
 import socket
 
@@ -9,6 +10,17 @@ def main():
     port = 2511
     startClient(host,port)
     
+
+def receiveFile(Sx):
+    file = Sx.recv(9000000)
+    with open("received_file.txt", "wb") as f:
+        f.write(file)
+    f.close()
+
+def receivePic(Sx):
+    print("Sleepy")
+
+
 def startClient(host,port):
     #Create Socket
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -21,9 +33,10 @@ def startClient(host,port):
 
     print("------------------------------")
     print("\tWaiting Connection")
-    file = Sx.recv(9000000)
-    with open("received_file.txt", "wb") as f:
-        f.write(file)
+
+    receiveFile(Sx)
+    receivePic(Sx)
+
     print("\tCompletely transfer")
 
 if __name__ == "__main__":

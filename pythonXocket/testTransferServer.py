@@ -1,4 +1,5 @@
 #Server
+#Test by sending a big file
 import time
 import socket
 from pathlib import Path
@@ -10,6 +11,15 @@ port = 2511
 def main():
     startServer(host, port)
     
+def sendFile(socket):
+    with open("large_file.txt", "rb") as file:
+            file_data = file.read()
+            socket.sendall(file_data)
+
+def sendPic(socket):
+    print("sleepy")
+        
+
 
 def startServer(host,port):
     #Create socket
@@ -31,10 +41,9 @@ def startServer(host,port):
         ####File
         print("\tStart uploading file")
         start = time.time()
-
-        with open("large_file.txt", "rb") as file:
-            file_data = file.read()
-            communication_socket.sendall(file_data)
+        sendFile(communication_socket)
+        sendPic(communication_socket)
+        
         end = time.time()
 
         ####Result
