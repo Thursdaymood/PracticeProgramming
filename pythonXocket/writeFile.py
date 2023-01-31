@@ -1,7 +1,7 @@
 import random
 
 file_name = "large_file.txt"
-file_size = 1024 * 1024 * 1024 * 1024  # 1GB
+file_size = 1024 * 1024 * 1024 # 1GB
 
 
 def writeFile():

@@ -9,19 +9,32 @@ def main():
     host = socket.gethostbyname(socket.gethostname())
     port = 2511
     startClient(host,port)
-    
 
-def receiveFile(Sx):
-    file = Sx.recv(9000000)
-    with open("received_file.txt", "wb") as f:
-        f.write(file)
-    f.close()
+def binToDec(binary):
+ 
+    decimal, i = 0, 0
+    while(binary != 0):
+        dec = binary % 10
+        decimal = decimal + dec * pow(2, i)
+        binary = binary//10
+        i += 1
+    return decimal
 
-def receivePic(Sx):
-    print("Sleepy")
+def convertNumBin(S,transfer_size):
+    #from Socket
+    size = S.recv(transfer_size) #file size
+    size = (str(size).split("\'"))
+    size = size[1].split("b")
+
+    return binToDec(int(size[-1]))
 
 
 def startClient(host,port):
+
+    #Details
+    transfer_size = 9000000
+    text_type = "utf-8"
+
     #Create Socket
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     name = ""
@@ -29,15 +42,29 @@ def startClient(host,port):
     while name =="":
         name = str(input("\tClient's name : "))
     Sx.connect((host, port))
-    Sx.send(name.encode("utf-8"))
+    print(f"\tClient address: {host}")
+    Sx.send(name.encode(text_type))
+    converted_size = convertNumBin(Sx,transfer_size)
+    
+    signal = 0
 
     print("------------------------------")
-    print("\tWaiting Connection")
+    print("\t-Waiting Connection-")
+    
+    with open("received_file", "wb") as file:
+        print("\t-Start receiving data-")
 
-    receiveFile(Sx)
-    receivePic(Sx)
+        while signal != converted_size :
+            count = 0
+            letter = Sx.recv(transfer_size)
+            file.write(letter)
+            if count == 50:
+                print("\n")
+                count =0
+            count+=1
+            signal+=1
 
-    print("\tCompletely transfer")
+    print("\t-Completely transfer-")
 
 if __name__ == "__main__":
     main()
