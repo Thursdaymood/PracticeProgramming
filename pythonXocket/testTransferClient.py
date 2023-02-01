@@ -2,6 +2,8 @@
 #Test by sending a big file
 import time
 import socket
+import os
+import sys
 
 
 def main():
@@ -35,7 +37,7 @@ def startClient(host,port):
     transfer_size = 9000000
     text_type = "utf-8"
 
-    #Create Socket
+    #Create Socket #TCP
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     name = ""
 
@@ -46,24 +48,25 @@ def startClient(host,port):
     Sx.send(name.encode(text_type))
     converted_size = convertNumBin(Sx,transfer_size)
     
-    signal = 0
+    #signal = 0
 
     print("------------------------------")
     print("\t-Waiting Connection-")
-    
-    with open("received_file", "wb") as file:
+    path = "D:\ received_file"
+    signal = 0
+    with open(path, "wb") as file:
         print("\t-Start receiving data-")
-
-        while signal != converted_size :
+        
+        while True:
             count = 0
             letter = Sx.recv(transfer_size)
             file.write(letter)
             if count == 50:
-                print("\n")
-                count =0
-            count+=1
-            signal+=1
+                file.write("\n")
+                count = 0
 
+            count+=1
+        
     print("\t-Completely transfer-")
 
 if __name__ == "__main__":

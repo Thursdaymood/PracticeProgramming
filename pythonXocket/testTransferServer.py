@@ -1,5 +1,5 @@
 #Server
-#Test by sending a big file
+#Test by sending the data
 import time
 import socket
 import random as ran
@@ -12,14 +12,14 @@ def main():
     startServer(host, port)
     
 def startServer(host,port):
-    #Create socket
+    #Create socket #TCP
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     Sx.bind((host,port))
     Sx.listen(5)
 
     print("------------------------------")
     while True:
-        
+
         size = 1048576 # 1 MB
         #size = 5242880 # 5 MB
         #size = 10485760 # 10 MB
@@ -57,7 +57,6 @@ def startServer(host,port):
         end = time.time()
         #Result
         print(f"------Total Time : {end-start}------------")
-        print("\n")
 
 
 if __name__ == "__main__":
