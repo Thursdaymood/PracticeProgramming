@@ -11,6 +11,22 @@ port = 2511
 def main():
     startServer(host, port)
     
+
+def transferOne(socket): # send just one char to write a big file
+    print("\t-Start sending data-")
+    start = time.time()
+    random_list = ["A","B","C","D","E","F"] # Each char = 1 byte
+
+    while size != 0:
+
+        letter = random_list[ran.randrange(len(random_list))]
+        socket.send(letter.encode("utf-8"))
+        size-=1
+
+    socket.close()
+    end = time.time()
+    return start-end
+
 def startServer(host,port):
     #Create socket #TCP
     Sx = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,13 +36,13 @@ def startServer(host,port):
     print("------------------------------")
     while True:
 
-        size = 1048576 # 1 MB
+        #size = 1048576 # 1 MB
         #size = 5242880 # 5 MB
         #size = 10485760 # 10 MB
-        #size = 524288000 # 500 MB
+        size = 524288000 # 500 MB
         #size = 1024*1024*1024 # 1 GB
         
-        transfer_size = 9000000 #.recv()
+        transfer_size = 9000000 #.recv() 9MB
         text_type = "utf-8" #decode/encode
 
         print("\tWaiting Connection")
@@ -41,22 +57,9 @@ def startServer(host,port):
         #print(f"\tCommunication socket : {communication_socket}")
 
         #File
-        print("\t-Start sending data-")
-        start = time.time()
-        random_list = ["A","B","C","D","E","F"] # Each char = 1 byte
-
-        while size != 0:
-
-            letter = random_list[ran.randrange(len(random_list))]
-            communication_socket.send(letter.encode(text_type))
-            size-=1
-
-
-        communication_socket.send("True".encode(text_type))
-        communication_socket.close()
-        end = time.time()
+        time = transferOne(communication_socket)
         #Result
-        print(f"------Total Time : {end-start}------------")
+        print(f"------Total Time : {time}------------")
 
 
 if __name__ == "__main__":
