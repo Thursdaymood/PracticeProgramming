@@ -3,8 +3,6 @@ import multiprocessing as mp
 import math
 import time
 
-# detail()
-# ref()
 
 done = False
 number_list = list(range(5000000))
@@ -14,12 +12,12 @@ result_3 = []
 
 
 def main():
-    sectionThree_multiThread()
+    sectionFour_multiThread()
 
 def recordTemplate(name, path, name_function):
-    print("🚩-----------------------")
+    print("💻-----------------------")
     print(f"\tYoutube Channel: {name}")
-    print(f"\tLecture from : {path}")
+    print(f"\tLecture from : 🚩{path}")
 
     if len(name_function) != 1:
         print(f"\tList of related function: ")
@@ -29,7 +27,6 @@ def recordTemplate(name, path, name_function):
 
     else:
         print(f"\tRelated function: {name_function[0]}")
-    print("-----------------------")
 
 def worker():
     counter = 0
@@ -63,7 +60,15 @@ def countNumber(user):
         print(count, end=" ")
         count+=1
         
-        
+def eat_breakfast():
+    time.sleep(3)
+    print("You ate breakfast.")
+def drink_coffee():
+    time.sleep(4)
+    print("You drank coffee")
+def study():
+    time.sleep(5)
+    print("You studied")
 
 def sectionOne_create_thread():
     # Basic create thread
@@ -100,8 +105,11 @@ def sectionTwo_multiProcessing():
     end1 = time.time()
     print(f"\tSingle Core -> Total time is : {end1-start1:.2f}")
 
+    #Some parts are at the bottom
+
 def sectionThree_multiThread():
     # MultiThread
+    # Tech with Tim
     for i in range(16): # Create thread following the num
         x = threading.Thread(target = countNumber, args = (10,))
         print(f"🎉Thread {i+1}")
@@ -113,6 +121,25 @@ def sectionThree_multiThread():
 
     print("All threads were executed")
 
+def sectionFour_multiThread():
+    #BroCode
+    # thread -> A flow of execution. like a separate order of instructions
+    # Each thread takes a turn running to achieve concurrency
+    # GIL (Global interpreter lock) -> allow only one thread to hold the control of the python interpreter
+
+
+    # cpu bound -> program/task most of its time waiting for internal events(CPU intensive) -> use multiprocessing!!
+    # I/O bound -> program/task spends most of its time waiting for external events (user input) -> use multithreading!!
+    
+    x = threading.Thread(target=eat_breakfast, args = ())
+    y = threading.Thread(target=drink_coffee, args = ())
+    z = threading.Thread(target=study, args = ())
+    x.start()
+    y.start()
+    z.start()
+    print(f"{time.perf_counter()/1000:.2f} s") # Performance Time is time of main thread executing
+    print(threading.active_count()) # Count the active running thread
+    print(threading.enumerate()) # Display all running thread in list
 
 
 def detail():
@@ -125,14 +152,17 @@ def detail():
     recordTemplate("NeuralNine", path2, function2)
 
     path3= "https://www.youtube.com/watch?v=cdPZ1pJACMI"
-    function3 = []
+    function3 = ["sectionThree_multiThread"]
     recordTemplate("Tech with Tim", path3, function3)
 
+    path4 = "https://www.youtube.com/watch?v=3dEPY3HiPtI"
+    recordTemplate("BroCode", path3, function3)
+
 def ref():
+    print("\n💫Crack Question")
     ref1 = "https://medium.com/@ksarthak4ever/python-threading-vs-multiprocessing-338724634bb6"
     ref2 = "https://www.guru99.com/difference-between-multiprocessing-and-multithreading.html"
-    print(f"\t🎇What is the different \n\tbetween multiprocessing and multithread?: \n\t{ref1} \n\t{ref2}")
-    print("-------------")
+    print(f"\t🎇What is the different between multiprocessing and multithread?: \n\t\t🚩{ref1} \n\t\t🚩{ref2}")
 
 # Part of sectionTwo
 # if __name__ == "__main__":
@@ -146,5 +176,5 @@ def ref():
 #     p3.start()
 #     end2 = time.time()
 #     print(f"\tMultiple Core -> Total time is : {end2 - start2:.2f}")
+
 main()
-    
