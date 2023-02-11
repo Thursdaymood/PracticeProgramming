@@ -14,7 +14,7 @@ result_3 = []
 
 
 def main():
-    sectionTwo_multiProcessing()
+    sectionThree_multiThread()
 
 def recordTemplate(name, path, name_function):
     print("🚩-----------------------")
@@ -57,6 +57,13 @@ def make_calculation_3(numbers):
     for num in numbers:
         result_1.append(math.sqrt(num**5))
 
+def countNumber(user):
+    count = 0 
+    while count != user+1:
+        print(count, end=" ")
+        count+=1
+        
+        
 
 def sectionOne_create_thread():
     # Basic create thread
@@ -93,14 +100,33 @@ def sectionTwo_multiProcessing():
     end1 = time.time()
     print(f"\tSingle Core -> Total time is : {end1-start1:.2f}")
 
+def sectionThree_multiThread():
+    # MultiThread
+    for i in range(16): # Create thread following the num
+        x = threading.Thread(target = countNumber, args = (10,))
+        print(f"🎉Thread {i+1}")
+        startTime = time.time()
+        x.start()
+        x.join()
+        endTime = time.time()
+        print(f"Total time : {endTime - startTime:.5f} s")
+
+    print("All threads were executed")
+
+
+
 def detail():
     path1 = "https://www.youtube.com/watch?v=A_Z1lgZLSNc"
     function1 =  ["sectionOne_create_thread"]
     recordTemplate("NeuralNine", path1, function1)
 
     path2 = "https://www.youtube.com/watch?v=GT10PnUFLlE"
-    function2 = []
+    function2 = ["sectionTwo_multiProcessing"]
     recordTemplate("NeuralNine", path2, function2)
+
+    path3= "https://www.youtube.com/watch?v=cdPZ1pJACMI"
+    function3 = []
+    recordTemplate("Tech with Tim", path3, function3)
 
 def ref():
     ref1 = "https://medium.com/@ksarthak4ever/python-threading-vs-multiprocessing-338724634bb6"
@@ -109,16 +135,16 @@ def ref():
     print("-------------")
 
 # Part of sectionTwo
-if __name__ == "__main__":
-     # Multiple Core
-    p1 = mp.Process(target=make_calculation_1, args=(number_list,))
-    p2 = mp.Process(target=make_calculation_2, args=(number_list,))
-    p3 = mp.Process(target=make_calculation_3, args=(number_list,))
-    start2 = time.time()
-    p1.start()
-    p2.start()
-    p3.start()
-    end2 = time.time()
-    print(f"\tMultiple Core -> Total time is : {end2 - start2:.2f}")
-    main()
+# if __name__ == "__main__":
+#      # Multiple Core
+#     p1 = mp.Process(target=make_calculation_1, args=(number_list,))
+#     p2 = mp.Process(target=make_calculation_2, args=(number_list,))
+#     p3 = mp.Process(target=make_calculation_3, args=(number_list,))
+#     start2 = time.time()
+#     p1.start()
+#     p2.start()
+#     p3.start()
+#     end2 = time.time()
+#     print(f"\tMultiple Core -> Total time is : {end2 - start2:.2f}")
+main()
     
