@@ -10,6 +10,9 @@ matrixB =[]
 def main():
     randomNumInMatrix(matrixA)
     randomNumInMatrix(matrixB)
+    displayMatrix(matrixA)
+    displayMatrix(matrixB)
+    displayMatrix(sumMatrix(matrixA, matrixB))
 
 
 def randomNumInMatrix(matrix):
