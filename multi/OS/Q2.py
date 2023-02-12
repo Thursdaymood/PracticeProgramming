@@ -46,6 +46,7 @@ def create_thread_typeOne(numThreads):
     displayTop3(list_result)
 
 def create_thread_typeTwo(numThreads):
+    # create at the same time
     for i in range(numThreads):
         x = th.Thread(target = countNumber_typeTwo, args=(i,))
         x.start()
