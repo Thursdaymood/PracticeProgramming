@@ -51,3 +51,10 @@ def create_item(item_id : int, item : Item):
         return {"Error" : "Item Id already exists."}
 
     inventory[item_id] = {"name": item.name, "price" : item.price ,"category" : item.category}
+
+
+# Update item
+@app.put("/update-item/{item_id}")
+def update_item(item_id : int, item: Item):
+    if item_id is not inventory:
+        return {"Error" : "Item ID does not already exist."}
