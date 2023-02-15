@@ -3,7 +3,7 @@ import json
 # JSON -> Javascript Object Notation
 # is a text format for string and transporting data
 # used to send data between computers
-# 
+# lightweight and easy to read/write
 mydict = {
     "People" : [
         {"name" : "Bob", "age" : 28,"weight" : 80},

@@ -1,12 +1,25 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, HTTPException, status
 from typing import Optional
 from pydantic import BaseModel
 
 app = FastAPI()
+# Endpoint parameter
+inventory = {
+    1:{
+        "name" : "Pepsi",
+        "price" : 1.5,
+        "category" : "beverage"
+    }
+}
 
 class Item(BaseModel):
     name : str
     price : float
+    category : Optional[str] = None
+
+class updateItem(BaseModel):
+    name : str = None
+    price : float = None
     category : Optional[str] = None
 
 @app.get("/")
@@ -30,25 +43,20 @@ def get_item(item_id : int = Path(None, description = "The Id of the item you'd 
     # Ex. facebook.com/home?reidrect=/
 
 @app.get("/get-by-name")
-def get_item(*, item_id : int , test : int, name : Optional[str] = None ):
+def get_item(*, item_id : int , price : float, name : Optional[str] = None ):
     for item in inventory:
         if inventory[item]["name"] == name:
             return inventory[item]
-    return {"Data":"Not found"}
+    #return {"Data":"Not found"}
+    #raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    raise HTTPException(status_code=404, detail ="Item name not found.")
 
-# Endpoint parameter
-inventory = {
-    1:{
-        "name" : "Pepsi",
-        "price" : 1.5,
-        "category" : "beverage"
-    }
-}
 
 @app.post("/create-item/{item_id}")
 def create_item(item_id : int, item : Item):
     if item_id in inventory:
-        return {"Error" : "Item Id already exists."}
+        #return {"Error" : "Item Id already exists."}
+        raise HTTPException(status_code=404, detail ="Item ID already exists.")
 
     inventory[item_id] = {"name": item.name, "price" : item.price ,"category" : item.category}
 
@@ -57,4 +65,28 @@ def create_item(item_id : int, item : Item):
 @app.put("/update-item/{item_id}")
 def update_item(item_id : int, item: Item):
     if item_id is not inventory:
-        return {"Error" : "Item ID does not already exist."}
+        #return {"Error" : "Item ID does not already exist."}
+        raise HTTPException(status_code=404, detail ="Item does not exist.")
+    if item.name != None:
+        inventory[item_id].name = item.name # keep the data in dictionary
+    
+    if item.price != None:
+        inventory[item_id].name = item.name # keep the data in dictionary
+        
+    if item.brand != None:
+        inventory[item_id].name = item.name # keep the data in dictionary
+
+    return inventory[item_id]
+
+#Delete item
+@app.delete("/delete-item")
+def delete_item(item_id : int = Query(..., description="The ID of the item to delete")):
+    if item_id not in inventory:
+        raise HTTPException(status_code=404, detail ="Item name not found.")
+    
+    del inventory[item_id]
+    return {"Success" : "Item delete!"}
+
+
+#return http code error
+
