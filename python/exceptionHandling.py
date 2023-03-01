@@ -97,15 +97,29 @@ def learningLoggingOne():
 #Logging tutorial
 def learningLoggingTwo():
     print()
+    # change formatter
+    formatter = "%(asctime)s / logger: %(name)s / %(levelname)s / %(message)s"
 
     #set level of configuration
-    logging.basicConfig(level=logging.INFO, filename="logRecord.log", filemode="w")
+    logging.basicConfig(level=logging.INFO, filename="logRecord.log", filemode="w"
+                        ,format=formatter)
+    
+    
+    #example using with log
+    try:
+        print(1/0)
+    except ZeroDivisionError as e:
+        logging.exception("ZeroDivision", exc_info=True)
 
-    logging.debug("Debug")
-    logging.info("info")
-    logging.warning("warning")
-    logging.error("error")
-    logging.critical("critical")
+    #custom logging
+    logger = logging.getLogger(__name__) # set every python file have logger
+    logger.info("Test the custom logger")
+
+    #handler to fix logger
+    handler = logging.FileHandler("test.log")
+    logger.addHandler(handler)
+
+
     print()
 
 learningLoggingTwo()
