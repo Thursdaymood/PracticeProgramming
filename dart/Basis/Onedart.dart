@@ -1,17 +1,19 @@
-import 'dart:html';
-import 'dart:indexed_db';
-
 void main(List<String> args) {
   //// Remember the syntax is quite similar to C# and Java
 
-  //🚩Variable & primitive type
+  ////🚩Variable & primitive type
   //exampleAssignVar();
-  //🚩Null & Non-null types
+  ////🚩Null & Non-null types
   //exampleNull_NonNull();
-  //🚩Null & Non-null types
-  exampleOperator();
-  //🚩Control Flow
+  ////🚩Operator
+  // exampleOperator();
+  ////🚩Control Flow
   //exampleControlFlow();
+  ////🚩Function
+  //exampleFuc();
+  ////🚩Higher order function
+  //exampleHighFunc();
+  
 }
 
 void exampleAssignVar() {
@@ -141,6 +143,12 @@ void exampleControlFlow() {
   int num = 5;
 
   //Iteration Statement
+  bool myBool = true;
+
+  do {
+    print("Wow that is the new thing");
+  } while (!(myBool));
+
   for (int i = 0; i < 8; i++) {
     num -= 1;
     i++;
@@ -187,10 +195,13 @@ void exampleControlFlow() {
     default:
       print("Oh greez");
   }
+
+  // Jump statement
   int count = 0;
   while (true) {
     print(count);
     if (count == 99) {
+      count += 1;
       continue;
     }
     if (count == 100) {
@@ -199,9 +210,51 @@ void exampleControlFlow() {
     }
     count += 1;
   }
-  bool myBool = true;
-
-  do {
-    print("Wow that is the new thing");
-  } while (!(myBool)); // 
 }
+
+//-----------------------------------------------------------------------------------------
+void exampleFunc() {
+  subOneExample("Crepe", 20);
+  subTwoExample();
+  subThreeExample("Pizza", "Ice-cream", "Water");
+  subFourExample(1, x: 2, y: 3, greeting: "Hi");
+}
+
+void subOneExample(String beverage, int cost, [String? topping]) {
+  //optional positional parameter
+}
+void subTwoExample({
+  // optional parameter
+  // have to define type of data in nullable type in this case
+  int? x,
+  double? y,
+  String? greeting = "hi",
+}) {
+  subTwoExample(x: 5);
+}
+
+void subThreeExample(String food, String dessert, String beverage,
+    [int cost = 0]) {
+  // Positional paramenter
+  // Focus on cost parameter in list is the default value when user don't insert the argument
+}
+void subFourExample(
+  int additionalVar, {
+  //required parameter
+  required int x,
+  required double y,
+  required String greeting,
+}) {
+  subFourExample(10, x: 1, y: 22.1, greeting: "Hello");
+}
+
+//-----------------------------------------------------------------------------------------
+
+void exampleHighFunc() {
+  // Find more easy understanding example
+}
+// int exampleHighFunc(int) twice(int exampleHighFunc(int) f){
+//   f is the name of the parameter and the parameter's type is function
+//   twice means make main function ran twice
+//   f(f(x)) <- Logic of higher order function similar to function in maths
+// }
